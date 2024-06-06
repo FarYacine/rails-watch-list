@@ -1,8 +1,16 @@
 Rails.application.routes.draw do
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
+  resources :lists, only: [:index, :show, :new, :create, :destroy] do
+    # lists/:id/bookmarks/new
+    resources :bookmarks, only: [:new, :create]
+  end
 
-  # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
-  # Can be used by load balancers and uptime monitors to verify that the app is live.
+  resources :bookmarks, only: :destroy
+    # index: Voir toutes les listes de films.
+    # show: Voir les détails d'une liste de films.
+    # new: Formulaire pour créer une nouvelle liste de films.
+    # create: Action pour créer une nouvelle liste de films.
+    # create: Ajouter un film (bookmark) à une liste de films.
+    # destroy: Détruire un bookmark.
   get "up" => "rails/health#show", as: :rails_health_check
 
   # Defines the root path route ("/")
